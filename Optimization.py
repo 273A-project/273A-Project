@@ -1,9 +1,11 @@
-from Polynomial import *
+from polynomial import *
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.optimize import minimize
 import numpy as np
 import matplotlib.pyplot as plt
 import itertools
+import time
+start_time = time.time() 
 
 def generate_monomial_basis(ring, max_degree):
         n = ring.n  
@@ -45,7 +47,7 @@ def constraint(coeffs):
 # z = points**3
 # data_set = np.column_stack((x, y, z))
 
-angle = np.linspace(0, 2 * np.pi, 1000)
+angle = np.linspace(0, 2 * np.pi, 10000)
 radius = 5
 x = radius * np.cos(angle)
 y = radius * np.sin(angle)
@@ -55,7 +57,11 @@ data_set = np.column_stack((x, y))
 cons = ({'type': 'eq', 'fun': constraint})
 variable, degree= 2, 2
 initial_guess = np.random.uniform(-1, 1, 6)
-initial_guess = [0.01,0,0,0,0,0.01]
-result = minimize(objective_function, initial_guess, args=(data_set, degree, variable), method='CG')
+result = minimize(objective_function, initial_guess, args=(data_set, degree, variable))
+# result = minimize(objective_function, initial_guess, args=(data_set, degree, variable), method='CG')
 best_fit_coeffs = result.x
 print("Best fit coefficients:", best_fit_coeffs)
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"Finding the polynomial took {elapsed_time} seconds")
