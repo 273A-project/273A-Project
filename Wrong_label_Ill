@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+
+# Create a sphere
+phi = np.linspace(0, 2 * np.pi, 50)
+theta = np.linspace(0, np.pi, 50)
+phi, theta = np.meshgrid(phi, theta)
+x_sphere = np.sin(theta) * np.cos(phi)
+y_sphere = np.sin(theta) * np.sin(phi)
+z_sphere = np.cos(theta)
+
+# Create a cube
+x_cube = np.random.uniform(-1, 1, 100)
+y_cube = np.random.uniform(-1, 1, 100)
+z_cube = np.random.uniform(-1, 1, 100)
+
+# Plotting
+fig = plt.figure(figsize=(8, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot the sphere (points on the sphere)
+ax.scatter(x_sphere, y_sphere, z_sphere, color='blue', s=10, label='Points on Sphere')
+
+# Plot the cube (points on the cube)
+ax.scatter(x_cube, y_cube, z_cube, color='red', s=10, label='Points on Cube (Wrong Labels)')
+
+# Setting labels and title
+ax.set_xlabel('X axis')
+ax.set_ylabel('Y axis')
+ax.set_zlabel('Z axis')
+ax.set_title('Sphere with Points and Cube with Wrong Label Points')
+ax.legend()
+
+plt.show()
+plt.savefig("wronglabel",dpi=500)
+

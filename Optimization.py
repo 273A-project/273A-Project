@@ -47,7 +47,7 @@ def constraint(coeffs):
 # z = points**3
 # data_set = np.column_stack((x, y, z))
 
-angle = np.linspace(0, 2 * np.pi, 10000)
+angle = np.linspace(0.5, 2 * np.pi, 5)
 radius = 5
 x = radius * np.cos(angle)
 y = radius * np.sin(angle)
@@ -57,11 +57,22 @@ data_set = np.column_stack((x, y))
 cons = ({'type': 'eq', 'fun': constraint})
 variable, degree= 2, 2
 initial_guess = np.random.uniform(-1, 1, 6)
-result = minimize(objective_function, initial_guess, args=(data_set, degree, variable))
-# result = minimize(objective_function, initial_guess, args=(data_set, degree, variable), method='CG')
+result = minimize(objective_function, initial_guess, args=(data_set, degree, variable),constraints=cons)
+#result = minimize(objective_function, initial_guess, args=(data_set, degree, variable), method='BFGS')
 best_fit_coeffs = result.x
 print("Best fit coefficients:", best_fit_coeffs)
 
 end_time = time.time()
 elapsed_time = end_time - start_time
 print(f"Finding the polynomial took {elapsed_time} seconds")
+
+plt.figure(figsize=(6, 6))
+plt.scatter(data_set[:, 0], data_set[:, 1], color='green')
+plt.title('Noisy Points on a Circle')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.grid(True)
+plt.axhline(0, color='black',linewidth=0.5)
+plt.axvline(0, color='black',linewidth=0.5)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
