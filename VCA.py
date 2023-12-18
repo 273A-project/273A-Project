@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import linalg
-from Polynomial import *
+from polynomial import *
 
 __all__ = ['VCA']
 
